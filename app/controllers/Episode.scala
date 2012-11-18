@@ -17,8 +17,13 @@ object Episode extends Controller {
       pipeline.zrange("episode_tracks:"+eurl, 0, -1)
       pipeline.lrange("episode_lines:"+eurl, 0, -1)
     })
+    val links = redis.syncAndReturnAllAs[Option[String]](pipeline => {
+      results._3.foreach(song => {
+        pipeline.get("song_link:"+song)
+      })
+    })
     
-    Ok(views.html.episode(results._1, results._2, results._3, results._4))
+    Ok(views.html.episode(results._1, results._2, results._3.zip(links), results._4))
   }
   
   def updateLine(pid: String, eid: String, position: String) = Action { request =>

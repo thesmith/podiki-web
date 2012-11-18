@@ -1,4 +1,4 @@
-@(podcast: Map[String, String], episode: Map[String, String], tracks: Seq[String], lines: Seq[String])
+@(podcast: Map[String, String], episode: Map[String, String], tracks: Seq[(String, Option[String])], lines: Seq[String])
 
 @main("Podcast | " + podcast("name") + " | " + episode("name")) {
     
@@ -7,7 +7,7 @@
   <h2>Tracks</h2>
   <ul>
     @tracks.map { track =>
-      <li>@track</li>
+      <li><a target="_blank" href="@track._2.getOrElse("")">@track._1</a></li>
     }
   </ul>
   
