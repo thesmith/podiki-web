@@ -1,0 +1,13 @@
+@(podcasts: Seq[Map[String, String]])
+
+@main("Podcasts") {
+    
+  <h1>Podcasts</h1>
+
+  <ol>
+    @podcasts.map { podcast =>
+      <li><a href='/podcasts/@podcast("id")'>@podcast("name")</a></li>
+    }
+  </ol>
+    
+}
