@@ -13,7 +13,7 @@ object Podcast extends Controller {
     val url = URLDecoder.decode(id, "UTF-8")
     val results = redis.syncAndReturn[Map[String, String], Seq[String]](pipeline => {
       pipeline.hgetAll("podcast:"+url)
-      pipeline.zrange("podcast_episodes:"+url, 0, -1)
+      pipeline.zrevrange("podcast_episodes:"+url, 0, -1)
     })
     val episodes = redis.syncAndReturnAllAs[Map[String, String]](pipeline => {
       results._2.foreach(episodeUrl => {
@@ -30,8 +30,6 @@ object Podcast extends Controller {
       urls.foreach(url => {
         pipeline.hgetAll("podcast:"+url)
       })
-    }).map(podcast => {
-      podcast + ("id" -> URLEncoder.encode(podcast("url"), "UTF-8"))
     })
     Ok(views.html.podcasts(podcasts))
   }

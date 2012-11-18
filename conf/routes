@@ -11,5 +11,7 @@ GET     /podcasts/:url               controllers.Podcast.podcast(url: String)
 
 GET     /podcasts/:pid/episodes/:eid controllers.Episode.episode(pid: String, eid: String) 
 
+POST    /podcasts/:pid/episodes/:eid/line/:position controllers.Episode.updateLine(pid: String, eid: String, position: String) 
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

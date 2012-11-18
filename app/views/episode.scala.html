@@ -5,16 +5,36 @@
   <h1>@podcast("name") | @episode("name")</h1>
 
   <h2>Tracks</h2>
-  <ol>
+  <ul>
     @tracks.map { track =>
       <li>@track</li>
     }
-  </ol>
+  </ul>
   
   <h2>Speech</h2>
-  <ol>
-    @lines.map { line => 
-      <li>@line</li>
+  <ul>
+    @lines.zipWithIndex.map { line => 
+      <li id="line_@line._2" data-position="@line._2" class="line">@line._1</li>
     }
-  </ol>
+  </ul>
+  
+  <script>
+    $('.line').click(function(ev) {
+      var $line = $(ev.currentTarget);
+      $line.removeClass('line');
+      var position = $line.data('position');
+      $line.replaceWith("<input id='update_"+position+"' data-position='"+position+"' type='text' value='"+$line.html()+"' />");
+      
+      $('#update_'+position).keypress(function(ev) {
+        if (ev.which == 13) {
+	        var $input = $(ev.currentTarget);
+	        var update = $input.val();
+	        var position = $input.data('position');
+	        $input.replaceWith("<li id='line_"+position+"' data-position='"+position+"' class='line'>"+update+"</li>");
+            
+	        $.post(location.pathname+'/line/'+position, 'line='+update);
+        }
+      });
+    })
+  </script>
 }

@@ -5,10 +5,10 @@
   <h1>@podcast("name")</h1>
 
   <h2>Episodes</h2>
-  <ol>
+  <ul>
     @episodes.map { episode =>
-      <li><a href='/episode/@episode("id")'>@episode("name")</a></li>
+      <li><a href='/podcasts/@podcast("id")/episodes/@episode("id")'>@episode("name")</a></li>
     }
-  </ol>
+  </ul>
     
 }

@@ -8,7 +8,7 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
-      "com.top10" %% "scala-redis-client" % "1.7.0-SNAPSHOT"
+      "com.top10" %% "scala-redis-client" % "1.9.0-SNAPSHOT"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
